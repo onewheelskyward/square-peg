@@ -1,1 +1,2 @@
-Instagram API gateway.
+sample-sinatra-modular-with-datamapper
+
