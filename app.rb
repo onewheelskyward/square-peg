@@ -1,12 +1,10 @@
 require 'sinatra/base'
 require 'data_mapper'
-#require 'dm-sqlite-adapter'
 require 'dm-postgres-adapter'
 
 DataMapper::Logger.new($stdout, :debug)
 DataMapper::Property::String.length(4000)
-#DataMapper.setup(:default, "sqlite://#{File.expand_path(File.dirname(__FILE__))}/sample.sqlite")
-DataMapper.setup(:default, "postgres://localhost/database")
+DataMapper.setup(:default, "postgres://localhost/square-peg")
 
 ["models", "helpers", "controllers", "routes"].each do |folder|
 	Dir.glob("#{folder}/*.rb").each { |file| require_relative file }

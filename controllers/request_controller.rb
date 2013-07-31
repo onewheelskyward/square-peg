@@ -1,5 +1,5 @@
 class App < Sinatra::Base
-	def get_something
-		"for nothing"
+	def get_popular
+		"do something"
 	end
 end

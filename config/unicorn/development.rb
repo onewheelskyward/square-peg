@@ -25,10 +25,10 @@ worker_processes 1
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen "/tmp/appname.sock", :backlog => 64
+listen "/tmp/square-peg.sock", :backlog => 64
 listen 8080, :tcp_nopush => true
 
-CAP_PATH = "/u/apps/appname"
+CAP_PATH = "/u/apps/square-peg"
 APP_PATH = "#{CAP_PATH}/current"
 working_directory APP_PATH
 

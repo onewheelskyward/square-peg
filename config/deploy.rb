@@ -3,12 +3,12 @@ set :default_stage, 'development'
 
 require 'capistrano/ext/multistage'
 
-#app_dir = "/u/apps/appname"
+#app_dir = "/u/apps/square-peg"
 #set :deploy_to,		app_dir
-set :application,	"appname"
-set :repository,	"git@github.com:user/appname"
+set :application,	"square-peg"
+set :repository,	"git@github.com:Athletepath/square-peg"
 #set :unicorn_pid,	"#{app_dir}/shared/pids/unicorn.pid"
-set :ssh_options,	{ forward_agent: true } # , port: 123
+set :ssh_options,	{ forward_agent: true, port: 1227 }
 set :deploy_via,	:remote_cache
 set :branch,		'develop'
 set :user,			'deploy_user'
@@ -23,7 +23,7 @@ set :normalize_asset_timestamps, false
 #role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
-namespace :appname do
+namespace :square-peg do
 	task :create_symlink do
 		run "ln -s #{fetch(:deploy_to)}/shared/config.yml #{fetch(:deploy_to)}/current/config/config.yml"
 	end
@@ -61,9 +61,9 @@ namespace :appname do
 end
 
 after "deploy:restart", "deploy:cleanup"
-after "deploy:create_symlink", "appname:create_symlink"
-after "appname:create_symlink", "appname:bundle_install"
-after "appname:restart_unicorn", "appname:git_tag"
+after "deploy:create_symlink", "square-peg:create_symlink"
+after "square-peg:create_symlink", "square-peg:bundle_install"
+after "square-peg:restart_unicorn", "square-peg:git_tag"
 
 # If you are using Passenger mod_rails uncomment this:
 # namespace :deploy do
