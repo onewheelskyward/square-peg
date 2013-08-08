@@ -23,7 +23,7 @@ set :normalize_asset_timestamps, false
 #role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
-namespace :square-peg do
+namespace :squarepeg do
 	task :create_symlink do
 		run "ln -s #{fetch(:deploy_to)}/shared/config.yml #{fetch(:deploy_to)}/current/config/config.yml"
 	end
@@ -61,9 +61,9 @@ namespace :square-peg do
 end
 
 after "deploy:restart", "deploy:cleanup"
-after "deploy:create_symlink", "square-peg:create_symlink"
-after "square-peg:create_symlink", "square-peg:bundle_install"
-after "square-peg:restart_unicorn", "square-peg:git_tag"
+after "deploy:create_symlink", "squarepeg:create_symlink"
+after "squarepeg:create_symlink", "squarepeg:bundle_install"
+after "squarepeg:restart_unicorn", "squarepeg:git_tag"
 
 # If you are using Passenger mod_rails uncomment this:
 # namespace :deploy do
