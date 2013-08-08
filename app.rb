@@ -1,8 +1,6 @@
 require 'sinatra/base'
 require 'data_mapper'
 require 'dm-postgres-adapter'
-require 'parse-qualifiers'
-set :bind, '0.0.0.0'
 
 class App < Sinatra::Base
 	DataMapper::Logger.new($stdout, :debug)
