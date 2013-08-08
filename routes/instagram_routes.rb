@@ -16,6 +16,7 @@ class App < Sinatra::Base
 	end
 	post '/v1/i/geographies' do
 		puts params.inspect
+		puts request.body.read.inspect
 		puts "Gotta geography post"
 	end
 end
