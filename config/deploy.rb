@@ -10,8 +10,8 @@ set :repository,	"git@github.com:Athletepath/square-peg"
 #set :unicorn_pid,	"#{app_dir}/shared/pids/unicorn.pid"
 set :ssh_options,	{ forward_agent: true, port: 1227 }
 set :deploy_via,	:remote_cache
-set :branch,		'develop'
-set :user,			'deploy_user'
+set :branch,		'master'
+set :user,			'andrewkreps'
 set :use_sudo,		false
 
 # Rids us of a number of annoying errors.

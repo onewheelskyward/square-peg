@@ -1,6 +1,0 @@
-db_server: localhost
-db_user: root
-db_password:
-instagram_client_id: 522266753b364065aefa1fcad1f8c078
-instagram_client_secret: 69704f0e288d4c3aa1790e347e5b96e4
-debug: true
