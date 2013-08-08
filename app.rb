@@ -14,7 +14,6 @@ class App < Sinatra::Base
 	DataMapper.finalize
 	DataMapper.auto_upgrade!
 # DataMapper.auto_migrate!  # This one wipes the database out every time.  Good for testing.
-
 	helpers Sinatra::Helpers
 
 	configure :development do
