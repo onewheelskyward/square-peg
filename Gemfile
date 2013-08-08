@@ -8,5 +8,9 @@ gem 'sinatra-reloader'
 gem 'unicorn'
 gem 'rspec'
 
+gem 'httparty'
+
 gem 'capistrano'
 gem 'capistrano-ext'
+
+gem 'parse-qualifiers', github: 'onewheelskyward/parse-qualifiers'

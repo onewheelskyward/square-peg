@@ -1,5 +1,5 @@
 db_server: localhost
-db_user:
+db_user: root
 db_password:
 instagram_client_id:
 instagram_client_secret:
