@@ -12,6 +12,7 @@ class App < Sinatra::Base
 	get '/v1/i/geographies' do
 		puts params.inspect
 		puts "Gotta geography"
+		params["hub.challenge"]
 	end
 	post '/v1/i/geographies' do
 		puts params.inspect
