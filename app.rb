@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/config_file'
 require 'data_mapper'
 require 'dm-postgres-adapter'
+require 'json'
 
 class App < Sinatra::Base
 	DataMapper::Property::String.length(4000)

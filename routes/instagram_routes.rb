@@ -1,3 +1,4 @@
+
 class App < Sinatra::Base
 	get '/v1/i/popular' do
 		get_popular
