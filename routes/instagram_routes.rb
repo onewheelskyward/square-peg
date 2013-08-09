@@ -38,11 +38,14 @@ class App < Sinatra::Base
 
 	get '/v1/i/random' do
 		x = RawRequest.first(type: :pubsub, method: 'geographies', order: [:id.desc])
+		x.payload.gsub! /\=\>/, ':'
+		x.payload.gsub! /nil/, 'null'
 		y = JSON.parse x.payload
+		urls = []
 		y['data'].each do |z|
-			puts z['images']['standard_resolution']['url']
+			urls.push z['images']['standard_resolution']['url']
 		end
-		x.to_json
+		urls.to_json
 	end
 
 	get '/v1/i/tags/athletepath' do
