@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>#athletepath Instagram</title>
+  <title>TN3 Gallery - Example 1</title>
 
   <style type="text/css">
 	  body {margin:50px 0px; padding:0px; background-color: #000000;color: #ffffff;}
@@ -21,31 +21,27 @@
 		  //Thumbnailer.config.shaderOpacity = 1;
 		  var tn1 = $('.mygallery').tn3({
 			  skinDir:"skins",
+			  delay:5000,
 			  imageClick:"fullscreen",
+			  autoplay:true,
+			  defaultTransition:"diagonal",
 			  image:{
-				  maxZoom:1.5,
-				  crop:true,
 				  clickEvent:"dblclick",
-				  transitions:[{
-					  type:"blinds"
-				  },{
-					  type:"grid"
-				  },{
-					  type:"grid",
-					  duration:460,
-					  easing:"easeInQuad",
-					  gridX:1,
-					  gridY:8,
-// flat, diagonal, circle, random
-					  sort:"flat",
-					  sortReverse:false,
-					  diagonalStart:"bl",
-// fade, scale
-					  method:"fade",
-					  partDuration:360,
-					  partEasing:"easeOutSine",
-					  partDirection:"left"
-				  }]
+				  defaultTransition:{
+					  type:"fade",
+					  duration:500,
+					  easing:"swing"
+//					  type:"blinds",
+//					  duration:900,
+//					  easing:"sineOut",
+//					  method:"fade",
+//					  gridX:7,
+//					  gridY:5,
+//					  sort:"diagonal",
+
+
+
+				  },
 			  }
 		  });
 	  });
@@ -55,31 +51,23 @@
 <div id="content">
   <div class="mygallery">
 	<div class="tn3 album">
-	  <h4></h4>
-	  <div class="tn3 description"></div>
-	  <div class="tn3 thumb"></div>
+	  <h4>Fixed Dimensions</h4>
+	  <div class="tn3 description">Images with fixed dimensions</div>
+	  <div class="tn3 thumb">images/35x35/1.jpg</div>
 	  <ol>
-		<li>
-		  <h4>Hohensalzburg Castle</h4>
-		  <div class="tn3 description">Salzburg, Austria</div>
-		  <a href="/css/1.jpg">
-			<img src="/css/1.jpg" />
-		  </a>
-		</li>
 		<% instagrams.each do |instagram| %>
-		<li>
-		  <h4><%= instagram['caption']['text'] %> @<%= instagram['user']['username'] %></h4>
-		  <div class="tn3 description"></div>
-		  <a href="<%= instagram['link'] %>">
-			<img src="<%= instagram['images']['standard_resolution']['url'] %>" />
-		  </a>
-		</li>
+			<li>
+			  <h4><%= instagram['caption']['text'] %> @<%= instagram['user']['username'] %></h4>
+			  <div class="tn3 description"></div>
+			  <a href="<%= instagram['images']['standard_resolution']['url'] %>">
+				<img src="<%= instagram['images']['standard_resolution']['url'] %>" />
+			  </a>
+			</li>
 		<% end %>
 	  </ol>
 	</div>
   </div>
   <div id="desc">
-	<p></p>
   </div>
 </div>
 </body>
