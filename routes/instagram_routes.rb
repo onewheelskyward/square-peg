@@ -23,12 +23,12 @@ class App < Sinatra::Base
 			case item["object"]
 				when "geography"
 					latest = HTTParty.get("https://api.instagram.com/v1/geographies/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
-					raw = RawRequest.create(type: :pubsub, method: "geographies", payload: latest)
+					raw = RawRequest.create(type: :pubsub, method: "geographies", payload: latest.to_json)
 					puts raw.valid?
 					#puts latest.inspect
 				when "tag"
 					latest = HTTParty.get("https://api.instagram.com/v1/tags/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
-					raw = RawRequest.create(type: :pubsub, method: "tags", payload: latest)
+					raw = RawRequest.create(type: :pubsub, method: "tags", payload: latest.to_json)
 					puts raw.valid?
 					#puts latest.inspect
 			end
@@ -37,10 +37,16 @@ class App < Sinatra::Base
 	end
 
 	get '/v1/i/random' do
-		x = RawRequest.first(type: :pubsub, :payload.like => '%geography%', order: [:id.desc])
+		x = RawRequest.first(type: :pubsub, method: 'geographies', order: [:id.desc])
+		y = JSON.parse x.payload
+		y['data'].each do |z|
+			puts z['images']['standard_resolution']['url']
+		end
+		x.to_json
 	end
 
 	get '/v1/i/tags/athletepath' do
-		x = RawRequest.first(type: :pubsub, :payload.like => '%athletepath%', order: [:id.desc])
+		x = RawRequest.first(type: :pubsub, method: 'tags', order: [:id.desc])
+		x.to_json
 	end
 end
