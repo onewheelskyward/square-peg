@@ -36,11 +36,14 @@ class App < Sinatra::Base
 		puts "Gotta geography post"
 	end
 
+	def fix_payload(payload)
+		payload = payload.gsub /\=\>/, ':'
+		payload.gsub /nil/, 'null'
+	end
+
 	get '/v1/i/random' do
 		x = RawRequest.first(type: :pubsub, method: 'geographies', order: [:id.desc])
-		x.payload.gsub! /\=\>/, ':'
-		x.payload.gsub! /nil/, 'null'
-		y = JSON.parse x.payload
+		y = JSON.parse fix_payload(x.payload)
 		urls = []
 		y['data'].each do |z|
 			urls.push z['images']['standard_resolution']['url']
@@ -49,7 +52,12 @@ class App < Sinatra::Base
 	end
 
 	get '/v1/i/tags/athletepath' do
-		x = RawRequest.first(type: :pubsub, method: 'tags', order: [:id.desc])
-		x.to_json
+		images = []
+		if x = RawRequest.first(type: :pubsub, method: 'tags', order: [:id.desc])
+			y = JSON.parse fix_payload(x.payload)
+			images = y['data']
+		end
+		#urls.to_json
+		erb :tags, :locals => {instagrams: images}
 	end
 end
