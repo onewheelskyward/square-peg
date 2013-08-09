@@ -31,12 +31,12 @@ class App < Sinatra::Base
 	if settings.db_user
 		server_connection_string = "#{settings.db_user}:#{settings.db_password}@#{server_connection_string}"
 	end
-	DataMapper.setup(:default, "postgres://#{server_connection_string}/#{settings.db}")
 
 	if settings.debug
 		DataMapper::Logger.new($stdout, :debug)
 	end
 
+	DataMapper.setup(:default, "postgres://#{server_connection_string}/#{settings.db}")
 	DataMapper.finalize
 	DataMapper.auto_upgrade!
 # DataMapper.auto_migrate!  # This one wipes the database out every time.  Good for testing.

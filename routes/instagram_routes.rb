@@ -23,16 +23,24 @@ class App < Sinatra::Base
 			case item["object"]
 				when "geography"
 					latest = HTTParty.get("https://api.instagram.com/v1/geographies/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
-					raw = RawRequest.create(type: :pubsub, method: "POST", payload: latest)
+					raw = RawRequest.create(type: :pubsub, method: "geographies", payload: latest)
 					puts raw.valid?
 					#puts latest.inspect
 				when "tag"
 					latest = HTTParty.get("https://api.instagram.com/v1/tags/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
-					raw = RawRequest.create(type: :pubsub, method: "POST", payload: latest)
+					raw = RawRequest.create(type: :pubsub, method: "tags", payload: latest)
 					puts raw.valid?
 					#puts latest.inspect
 			end
 		end
 		puts "Gotta geography post"
+	end
+
+	get '/v1/i/random' do
+		x = RawRequest.first(type: :pubsub, :payload.like => '%geography%', order: [:id.desc])
+	end
+
+	get '/v1/i/tags/athletepath' do
+		x = RawRequest.first(type: :pubsub, :payload.like => '%athletepath%', order: [:id.desc])
 	end
 end
