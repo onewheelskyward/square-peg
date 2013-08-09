@@ -41,14 +41,15 @@ class App < Sinatra::Base
 		payload.gsub /nil/, 'null'
 	end
 
-	get '/v1/i/random' do
-		x = RawRequest.first(type: :pubsub, method: 'geographies', order: [:id.desc])
-		y = JSON.parse fix_payload(x.payload)
-		urls = []
-		y['data'].each do |z|
-			urls.push z['images']['standard_resolution']['url']
+	get '/v1/i/geo' do
+		images = []
+		if x = RawRequest.all(type: :pubsub, method: 'geographies', order: [:id.desc], limit: 40)
+			x.each do |request|
+				y = JSON.parse fix_payload(request.payload)
+				y['data'].each {|m| images.push m}
+			end
 		end
-		urls.to_json
+		erb :geo, :locals => {instagrams: images[0..100]}
 	end
 
 	get '/v1/i/tags/athletepath' do
