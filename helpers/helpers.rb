@@ -10,6 +10,16 @@ module Sinatra
 			request.response = response.to_json
 			request.save
 		end
+		def parse_request_data
+			# Todo handle empty request bodies
+			request.body.rewind
+			begin
+				data = ::JSON.parse request.body.read
+			rescue ::JSON::ParserError => e
+				return false
+			end
+			data
+		end
 	end
 	helpers Helpers
 end
