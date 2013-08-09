@@ -20,13 +20,14 @@ class App < Sinatra::Base
 		puts request.body.read.inspect
 		request = parse_request_data
 		request.each do |item|
-		case item["object"]
-			when "geography"
-				latest = HTTParty.get("https://api.instagram.com/v1/geographies/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
-				puts latest.inspect
-			when "tag"
-				latest = HTTParty.get("https://api.instagram.com/v1/tags/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
-				puts latest.inspect
+			case item["object"]
+				when "geography"
+					latest = HTTParty.get("https://api.instagram.com/v1/geographies/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
+					puts latest.inspect
+				when "tag"
+					latest = HTTParty.get("https://api.instagram.com/v1/tags/#{item["object_id"]}/media/recent?client_id=522266753b364065aefa1fcad1f8c078")
+					puts latest.inspect
+			end
 		end
 		puts "Gotta geography post"
 	end
