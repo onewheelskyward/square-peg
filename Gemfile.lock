@@ -135,6 +135,7 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-sqlite-adapter
   httparty
+  json
   parse-qualifiers!
   rspec
   sinatra
