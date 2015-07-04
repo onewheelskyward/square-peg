@@ -10,6 +10,7 @@ module Sinatra
 			request.response = response.to_json
 			request.save
 		end
+
 		def parse_request_data
 			# Todo handle empty request bodies
 			request.body.rewind

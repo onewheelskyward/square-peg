@@ -1,17 +1,17 @@
-set :stages, ['local', 'development', 'staging', 'production']
+set :stages, %w(local development staging production)
 set :default_stage, 'development'
 
 require 'capistrano/ext/multistage'
 
-#app_dir = "/u/apps/square-peg"
-#set :deploy_to,		app_dir
+app_dir = "~/apps/square-peg"
+set :deploy_to,		app_dir
 set :application,	"square-peg"
-set :repository,	"git@github.com:Athletepath/square-peg"
+set :repository,	"git@github.com:onewheelskyward/square-peg"
 #set :unicorn_pid,	"#{app_dir}/shared/pids/unicorn.pid"
-set :ssh_options,	{ forward_agent: true, port: 1227 }
+set :ssh_options,	{ forward_agent: true }  # , port: 1227
 set :deploy_via,	:remote_cache
 set :branch,		'master'
-set :user,			'andrewkreps'
+set :user,			'ec2-user'
 set :use_sudo,		false
 
 # Rids us of a number of annoying errors.
@@ -27,11 +27,11 @@ namespace :squarepeg do
 	task :create_symlink do
 		run "ln -s #{fetch(:deploy_to)}/shared/config.yml #{fetch(:deploy_to)}/current/config/config.yml"
 	end
-	task :restart_unicorn do
-		run "~/.rbenv/shims/ruby ~/unicorn_graceful.rb"
-	end
+	# task :restart_unicorn do
+	# 	run "~/.rbenv/shims/ruby ~/unicorn_graceful.rb"
+	# end
 	task :bundle_install do
-		run "cd /u/apps/#{fetch(:application)}/current ; ~/.rbenv/shims/gem install bundler ; ~/.rbenv/shims/bundle install ; ~/.rbenv/bin/rbenv rehash"
+		run "cd #{fetch(:deploy_to)}/current ; ~/.rbenv/shims/gem install bundler ; ~/.rbenv/shims/bundle install ; ~/.rbenv/bin/rbenv rehash"
 	end
 	task :git_tag do  # Create a nice environment-date-time tag for the release.
 		date = nil
@@ -63,13 +63,4 @@ end
 after "deploy:restart", "deploy:cleanup"
 after "deploy:create_symlink", "squarepeg:create_symlink"
 after "squarepeg:create_symlink", "squarepeg:bundle_install"
-after "squarepeg:restart_unicorn", "squarepeg:git_tag"
-
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+after "deploy:cleanup", "squarepeg:git_tag"
